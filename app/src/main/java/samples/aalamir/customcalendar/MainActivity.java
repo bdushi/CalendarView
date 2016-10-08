@@ -1,42 +1,25 @@
 package samples.aalamir.customcalendar;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
+import android.view.View;
+import android.widget.Button;
 
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
-	CalendarView mCalendarView;
-
+	Button button;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mCalendarView = ((CalendarView)findViewById(R.id.calendar_view));
-		HashSet<Date> events = new HashSet<>();
-		events.add(new Date());
-		mCalendarView.updateCalendar(events);
+		button = (Button) findViewById(R.id.calendatDialog);
+		assert button != null;
+		button.setOnClickListener(this);
 
-		// assign event handler
-		mCalendarView.setEventHandler(new CalendarView.EventHandler()
-		{
-			@Override
-			public void onDayLongPress(Date date)
-			{
-				// show returned day
-				DateFormat df = SimpleDateFormat.getDateInstance();
-				Toast.makeText(MainActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
-			}
-		});
 	}
 
 	@Override
@@ -62,5 +45,11 @@ public class MainActivity extends ActionBarActivity
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View view) {
+		new CalendarFragment().show(getSupportFragmentManager(),"calendardialog");
+
 	}
 }

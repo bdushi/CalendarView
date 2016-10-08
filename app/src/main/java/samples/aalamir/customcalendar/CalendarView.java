@@ -1,16 +1,11 @@
 package samples.aalamir.customcalendar;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -145,19 +140,10 @@ public class CalendarView extends LinearLayout
 			}
 		});
 
-		// long-pressing a day
-		grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-		{
-
+		grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> view, View cell, int position, long id)
-			{
-				// handle long-press
-				if (eventHandler == null)
-					return false;
-
-				eventHandler.onDayLongPress((Date)view.getItemAtPosition(position));
-				return true;
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				eventHandler.onDateClickListener((Date) adapterView.getItemAtPosition(i));
 			}
 		});
 	}
@@ -206,79 +192,6 @@ public class CalendarView extends LinearLayout
 
 		header.setBackgroundColor(getResources().getColor(color));
 	}
-
-
-	private class CalendarAdapter extends ArrayAdapter<Date>
-	{
-		// days with events
-		private HashSet<Date> eventDays;
-
-		// for view inflation
-		private LayoutInflater inflater;
-
-		public CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays)
-		{
-			super(context, R.layout.control_calendar_day, days);
-			this.eventDays = eventDays;
-			inflater = LayoutInflater.from(context);
-		}
-
-		@Override
-		public View getView(int position, View view, ViewGroup parent)
-		{
-			// day in question
-			Date date = getItem(position);
-			int day = date.getDate();
-			int month = date.getMonth();
-			int year = date.getYear();
-
-			// today
-			Date today = new Date();
-
-			// inflate item if it does not exist yet
-			if (view == null)
-				view = inflater.inflate(R.layout.control_calendar_day, parent, false);
-
-			// if this day has an event, specify event image
-			view.setBackgroundResource(0);
-			if (eventDays != null)
-			{
-				for (Date eventDate : eventDays)
-				{
-					if (eventDate.getDate() == day &&
-							eventDate.getMonth() == month &&
-							eventDate.getYear() == year)
-					{
-						// mark this day for event
-						view.setBackgroundResource(R.drawable.reminder);
-						break;
-					}
-				}
-			}
-
-			// clear styling
-			((TextView)view).setTypeface(null, Typeface.NORMAL);
-			((TextView)view).setTextColor(Color.BLACK);
-
-			if (month != today.getMonth() || year != today.getYear())
-			{
-				// if this day is outside current month, grey it out
-				((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
-			}
-			else if (day == today.getDate())
-			{
-				// if it is today, set it to blue/bold
-				((TextView)view).setTypeface(null, Typeface.BOLD);
-				((TextView)view).setTextColor(getResources().getColor(R.color.today));
-			}
-
-			// set text
-			((TextView)view).setText(String.valueOf(date.getDate()));
-
-			return view;
-		}
-	}
-
 	/**
 	 * Assign event handler to be passed needed events
 	 */
@@ -293,6 +206,6 @@ public class CalendarView extends LinearLayout
 	 */
 	public interface EventHandler
 	{
-		void onDayLongPress(Date date);
+		void onDateClickListener(Date date);
 	}
 }
