@@ -62,7 +62,7 @@ class CalendarAdapter extends ArrayAdapter<Date>
                         eventDate.getYear() == year)
                 {
                     // mark this day for event
-                    view.setBackgroundResource(R.drawable.reminder);
+                    //view.setBackgroundResource(R.drawable.reminder);
                     break;
                 }
             }
