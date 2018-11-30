@@ -1,4 +1,4 @@
-package samples.aalamir.customcalendar;
+package al.bruno.calendar.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -90,19 +90,14 @@ public class CalendarView extends LinearLayout
 		updateCalendar();
 	}
 
-	private void loadDateFormat(AttributeSet attrs)
-	{
+	private void loadDateFormat(AttributeSet attrs) {
 		TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.CalendarView);
-
-		try
-		{
+		try {
 			// try to load provided date format, and fallback to default otherwise
 			dateFormat = ta.getString(R.styleable.CalendarView_dateFormat);
 			if (dateFormat == null)
 				dateFormat = DATE_FORMAT;
-		}
-		finally
-		{
+		} finally {
 			ta.recycle();
 		}
 	}
@@ -195,8 +190,7 @@ public class CalendarView extends LinearLayout
 	/**
 	 * Assign event handler to be passed needed events
 	 */
-	public void setEventHandler(EventHandler eventHandler)
-	{
+	public void setEventHandler(EventHandler eventHandler) {
 		this.eventHandler = eventHandler;
 	}
 

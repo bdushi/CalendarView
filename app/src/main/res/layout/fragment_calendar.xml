@@ -1,17 +1,17 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
+    xmlns:calendarNS="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".CalendarFragment">
-
-    <samples.aalamir.customcalendar.CalendarView
-        xmlns:calendarNS="http://schemas.android.com/apk/res/samples.aalamir.customcalendar"
+    tools:context="al.bruno.calendar.view.CalendarFragment">
+    <al.bruno.calendar.view.CalendarView
         android:id="@+id/calendar_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!--<al.bruno.calendar.view.CalendarView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMMM yyyy"/>
-
+        calendarNS:dateFormat="MMMM yyyy"/>-->
 </LinearLayout>
