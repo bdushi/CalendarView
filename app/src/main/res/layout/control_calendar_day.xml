@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:minHeight="35dp"
-	android:gravity="center"
-	android:textAppearance="@android:style/TextAppearance.Medium"
-	android:textAlignment="center"/>
+<layout>
+	<data>
+		<variable
+			name="dateTime"
+			type="al.bruno.calendar.view.LocalDateTime"/>
+	</data>
+	<TextView
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:minHeight="35dp"
+		android:gravity="center"
+		android:text="@{dateTime.date}"
+		android:textAppearance="@android:style/TextAppearance.Small"
+		android:textAlignment="center"/>
+</layout>

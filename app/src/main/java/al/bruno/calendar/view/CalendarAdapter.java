@@ -17,8 +17,7 @@ import java.util.HashSet;
 /**
  * Created by bruno on 10/7/2016.
  */
-class CalendarAdapter extends ArrayAdapter<Date>
-{
+class CalendarAdapter extends ArrayAdapter<Date> {
     // days with events
     private HashSet<Date> eventDays;
 
@@ -26,8 +25,7 @@ class CalendarAdapter extends ArrayAdapter<Date>
     private LayoutInflater inflater;
     Context context;
 
-    CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays)
-    {
+    CalendarAdapter(Context context, ArrayList<Date> days, HashSet<Date> eventDays) {
         super(context, R.layout.control_calendar_day, days);
         this.eventDays = eventDays;
         this.context = context;

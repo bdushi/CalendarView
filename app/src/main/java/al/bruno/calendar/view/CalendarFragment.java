@@ -21,29 +21,5 @@ import java.util.HashSet;
  * Created by bruno on 10/8/2016.
  */
 
-public class CalendarFragment extends DialogFragment {
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        CalendarView mCalendarView = view.findViewById(R.id.calendar_view);
-        HashSet<Date> events = new HashSet<>();
-        events.add(new Date());
-        mCalendarView.updateCalendar(events);
-        // assign event handler
-        mCalendarView.setEventHandler(new CalendarView.EventHandler() {
-            @Override
-            public void onDateClickListener(Date date) {
-                // show returned day
-                DateFormat mDateFormat = SimpleDateFormat.getDateInstance();
-                Toast.makeText(getActivity(), mDateFormat.format(date), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+public class CalendarFragment {
 }
