@@ -20,8 +20,7 @@ import java.util.HashSet;
 /**
  * Created by a7med on 28/06/2015.
  */
-public class CalendarView extends LinearLayout
-{
+public class CalendarView extends LinearLayout {
 	// for logging
 	private static final String LOGTAG = "Calendar View";
 
