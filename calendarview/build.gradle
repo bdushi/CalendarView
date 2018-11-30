@@ -10,10 +10,9 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
     dataBinding {
         enabled = true
     }
@@ -34,8 +33,10 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'joda-time:joda-time:2.10.1'
+    implementation project(':customadapter')
 }

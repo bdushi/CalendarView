@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import org.joda.time.DateTime;
 
 import java.util.List;
-import al.bruno.calendar.view.listener.OnItemClickListener;
+import al.bruno.customadapter.OnItemClickListener;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;

@@ -3,7 +3,7 @@ package al.bruno.calendar.view.calendar;
 import android.view.View;
 
 import al.bruno.calendar.view.R;
-import al.bruno.calendar.view.listener.OnItemClickListener;
+import al.bruno.customadapter.OnItemClickListener;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 

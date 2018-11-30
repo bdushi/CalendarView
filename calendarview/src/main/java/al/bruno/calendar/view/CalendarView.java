@@ -4,12 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
@@ -17,17 +12,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 import al.bruno.calendar.view.databinding.ControlCalendarBinding;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
-import al.bruno.calendar.view.databinding.WeekSingleItemBinding;
-import al.bruno.customadapter.BindingInterface;
 import al.bruno.customadapter.CustomAdapter;
-import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by a7med on 28/06/2015.

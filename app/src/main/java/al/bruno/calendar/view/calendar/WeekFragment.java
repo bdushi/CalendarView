@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import al.bruno.calendar.view.R;
-import al.bruno.calendar.view.listener.OnItemClickListener;
+import al.bruno.customadapter.OnItemClickListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

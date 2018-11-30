@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<declare-styleable name="CalendarView">
-		<attr name="dateFormat" format="string"/>
-
 		<attr name="numOfPages" format="integer"/>
 		<attr name="daysTextSize" format="dimension"/>
 		<attr name="daysTextColor" format="color"/>
