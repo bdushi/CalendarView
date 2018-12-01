@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import al.bruno.calendar.view.databinding.ControlCalendarBinding;
+import al.bruno.calendar.view.databinding.CalendarViewBinding;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import al.bruno.customadapter.CustomAdapter;
 import androidx.databinding.DataBindingUtil;
@@ -23,7 +23,6 @@ import androidx.databinding.DataBindingUtil;
  * Created by a7med on 28/06/2015.
  */
 public class CalendarView extends LinearLayout {
-	private ControlCalendarBinding controlCalendarBinding;
 	// for logging
 	private static final String LOGTAG = "Calendar View";
 
@@ -69,17 +68,17 @@ public class CalendarView extends LinearLayout {
 	}
 
 	private void initControl(Context context, AttributeSet attrs) {
-		//LayoutInflater.from(context).inflate(R.layout.control_calendar, this);
+		//LayoutInflater.from(context).inflate(R.layout.calendar_view, this);
 
 		/*LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.control_calendar, this);*/
-		controlCalendarBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.control_calendar, this, true);
-
+		inflater.inflate(R.layout.calendar_view, this);*/
+		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
+		calendarViewBinding.setCalendar(new al.bruno.calendar.view.Calendar());
 		//grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
 		loadDateFormat(attrs);
 		assignClickHandlers();
 
-		updateCalendar();
+		//updateCalendar();
 	}
 
 	private void loadDateFormat(AttributeSet attrs) {
@@ -148,7 +147,7 @@ public class CalendarView extends LinearLayout {
 
 		// update grid
 		//grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
-		controlCalendarBinding.setAdapter(new CustomAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTimes, R.layout.control_calendar_day, ControlCalendarDayBinding::setDateTime));
+		//calendarViewBinding.setAdapter(new CustomAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTimes, R.layout.control_calendar_day, ControlCalendarDayBinding::setDateTime));
 
 		// update title
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);

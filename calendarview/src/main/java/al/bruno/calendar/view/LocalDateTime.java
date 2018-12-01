@@ -4,8 +4,7 @@ import org.joda.time.DateTime;
 
 public class LocalDateTime {
     private DateTime dateTime;
-    private String date;
-    public LocalDateTime(DateTime dateTime) {
+    LocalDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
     }
     public DateTime getDateTime() {

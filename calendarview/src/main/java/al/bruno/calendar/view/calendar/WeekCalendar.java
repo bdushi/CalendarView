@@ -65,16 +65,16 @@ public class WeekCalendar extends LinearLayout
         if(attrs != null)
         {
             typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.CalendarView);
-            int selectedDateColor = typedArray.getColor(R.styleable.CalendarView_selectedBgColor, ContextCompat.getColor(getContext(), R.color.colorAccent));
-            int todayDateColor = typedArray.getColor(R.styleable.CalendarView_todaysDateBgColor, ContextCompat.getColor(getContext(), R.color.colorAccent));
+            int selectedDateColor = typedArray.getColor(R.styleable.CalendarView_selectedBgColor, ContextCompat.getColor(getContext(), R.color.greyed_out));
+            int todayDateColor = typedArray.getColor(R.styleable.CalendarView_todaysDateBgColor, ContextCompat.getColor(getContext(), R.color.greyed_out));
             int daysTextColor = typedArray.getColor(R.styleable.CalendarView_daysTextColor, Color.WHITE);
             float daysTextSize = typedArray.getColor(R.styleable.CalendarView_daysTextColor, -1);
-            int todayDateTextColor = typedArray.getColor(R.styleable.CalendarView_todaysDateTextColor, ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            int todayDateTextColor = typedArray.getColor(R.styleable.CalendarView_todaysDateTextColor, ContextCompat.getColor(getContext(), R.color.design_default_color_primary));
             setDayDecorator(new DefaultDayDecorator(getContext(), selectedDateColor, todayDateColor, todayDateTextColor, daysTextColor, daysTextSize));
         }
         setOrientation(VERTICAL);
         month = new TextView(getContext());
-        month.setBackgroundColor(typedArray.getColor(R.styleable.CalendarView_monthBackgroundColor, ContextCompat.getColor(getContext(), R.color.colorPrimary)));
+        month.setBackgroundColor(typedArray.getColor(R.styleable.CalendarView_monthBackgroundColor, ContextCompat.getColor(getContext(), R.color.greyed_out)));
         month.setTextSize(typedArray.getDimension(R.styleable.CalendarView_monthTextSize, 20));
         month.setTextColor(typedArray.getColor(R.styleable.CalendarView_monthTextColor, Color.WHITE));
 
@@ -192,7 +192,7 @@ public class WeekCalendar extends LinearLayout
         if (typedArray != null)
             daysName.setBackgroundColor(typedArray.getColor(R.styleable
                     .CalendarView_weekBackgroundColor, ContextCompat.getColor(getContext(), R
-                    .color.colorPrimary)));
+                    .color.greyed_out)));
         return daysName;
     }
 

@@ -32,8 +32,7 @@ public class WeekPager extends ViewPager
         initialize(null);
     }
 
-    public WeekPager(Context context, AttributeSet attrs)
-    {
+    public WeekPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(attrs);
     }
@@ -70,7 +69,7 @@ public class WeekPager extends ViewPager
         pos = NUM_OF_PAGES / 2;
         adapter = new PagerAdapter(((AppCompatActivity) getContext()).getSupportFragmentManager(), dateTime);
         setAdapter(adapter);
-        addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener()
+        addOnPageChangeListener(new SimpleOnPageChangeListener()
         {
             @Override
             public void onPageSelected(int position)
@@ -89,7 +88,7 @@ public class WeekPager extends ViewPager
         setCurrentItem(pos);
         if (typedArray != null)
             setBackgroundColor(typedArray.getColor(R.styleable.CalendarView_daysBackgroundColor,
-                    ContextCompat.getColor(getContext(), R.color.colorPrimary)));
+                    ContextCompat.getColor(getContext(), R.color.design_default_color_primary)));
         if (WeekFragment.selectedDateTime == null)
             WeekFragment.selectedDateTime = new DateTime();
     }
