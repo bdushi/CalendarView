@@ -1,9 +1,9 @@
 <resources>
-    <string name="monday">M</string>
-    <string name="tuesday">T</string>
-    <string name="wednesday">W</string>
-    <string name="thursday">T</string>
-    <string name="friday">F</string>
-    <string name="saturday">S</string>
-    <string name="sunday">S</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WEN</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
 </resources>

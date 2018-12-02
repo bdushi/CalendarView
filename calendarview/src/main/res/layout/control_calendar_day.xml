@@ -2,16 +2,21 @@
 <layout>
 	<data>
 		<variable
-			name="dateTime"
+			name="localDateTime"
 			type="al.bruno.calendar.view.LocalDateTime"/>
+		<variable
+			name="dateClickListener"
+			type="al.bruno.calendar.view.OnDateClickListener"/>
 	</data>
-	<TextView
+	<androidx.appcompat.widget.AppCompatTextView
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:minHeight="35dp"
+		android:layout_height="wrap_content"
+		android:padding="5dp"
 		android:gravity="center"
-		android:text="@{dateTime.date}"
-		android:textAppearance="@android:style/TextAppearance.Small"
+		android:text="@{localDateTime.date}"
+		android:textColor="@{localDateTime.sunday ? @color/sunday : (localDateTime.currentMonth  ? @color/black : @color/greyed_out)}"
+		android:background="@{localDateTime.today ? @color/today : @color/null_color}"
+		android:onClickListener="@{(v) -> dateClickListener.setOnDateClickListener(v, localDateTime)}"
 		android:textAlignment="center"/>
 </layout>

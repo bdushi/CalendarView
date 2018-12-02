@@ -14,11 +14,21 @@
 		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			style="@style/Base.TextAppearance.AppCompat.Large"/>
+			android:layout_marginStart="20dp"
+			android:text="@{calendar.month}"
+			style="@style/Base.TextAppearance.AppCompat.Month"/>
 		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			style="@style/Base.TextAppearance.AppCompat.Medium"/>
+			android:layout_marginStart="20dp"
+			android:text="@{calendar.year}"
+			style="@style/Base.TextAppearance.AppCompat.Year"/>
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/greyed_out"
+			android:layout_marginBottom="2dp"
+			android:layout_marginTop="2dp"/>
 		<LinearLayout
 			android:id="@+id/calendar_header"
 			android:layout_width="match_parent"
@@ -28,44 +38,44 @@
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/monday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/tuesday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/wednesday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/thursday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/friday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"
+				style="@style/Base.TextAppearance.AppCompat.Day"
 				android:text="@string/saturday"/>
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
 				android:text="@string/sunday"
-				style="@style/Base.TextAppearance.AppCompat.Body1.Day"/>
+				style="@style/Base.TextAppearance.AppCompat.Sunday"/>
 		</LinearLayout>
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/calendar_grid"
