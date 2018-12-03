@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android">
 	<data>
 		<variable
 			name="localDateTime"
@@ -7,16 +8,30 @@
 		<variable
 			name="dateClickListener"
 			type="al.bruno.calendar.view.OnDateClickListener"/>
+		<import type="android.view.View"/>
 	</data>
-	<androidx.appcompat.widget.AppCompatTextView
-		xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:padding="5dp"
-		android:gravity="center"
-		android:text="@{localDateTime.date}"
-		android:textColor="@{localDateTime.sunday ? @color/sunday : (localDateTime.currentMonth  ? @color/black : @color/greyed_out)}"
-		android:background="@{localDateTime.today ? @color/today : @color/null_color}"
-		android:onClickListener="@{(v) -> dateClickListener.setOnDateClickListener(v, localDateTime)}"
-		android:textAlignment="center"/>
+        android:layout_margin="5dp"
+		android:orientation="vertical">
+		<androidx.appcompat.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:gravity="center"
+			android:text="@{localDateTime.date}"
+			android:textColor="@{localDateTime.sunday ? @color/sunday : (localDateTime.currentMonth  ? @color/black : @color/greyed_out)}"
+			android:background="@{localDateTime.today ? @drawable/today : @drawable/null_day}"
+			android:onClickListener="@{(v) -> dateClickListener.setOnDateClickListener(v, localDateTime)}"
+			android:textAlignment="center"/>
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="2dp"
+			android:background="@color/sunday"
+			android:layout_marginStart="10dp"
+			android:layout_marginEnd="10dp"
+			android:layout_marginTop="1dp"
+			android:visibility="@{localDateTime.today ? View.VISIBLE : View.GONE}"/>
+	</LinearLayout>
 </layout>

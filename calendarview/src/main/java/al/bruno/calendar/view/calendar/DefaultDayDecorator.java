@@ -45,8 +45,7 @@ class DefaultDayDecorator implements DayDecorator
     }
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void decorate(View view, TextView dayTextView, DateTime dateTime, DateTime firstDayOfTheWeek, DateTime selectedDateTime)
-    {
+    public void decorate(View view, TextView dayTextView, DateTime dateTime, DateTime firstDayOfTheWeek, DateTime selectedDateTime) {
         Drawable holoCircle = ContextCompat.getDrawable(context, R.drawable.selected_day);
         Drawable solidCircle = ContextCompat.getDrawable(context, R.drawable.today);
 
