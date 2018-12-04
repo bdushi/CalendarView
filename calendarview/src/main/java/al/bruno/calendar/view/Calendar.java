@@ -1,5 +1,7 @@
 package al.bruno.calendar.view;
 
+import android.view.View;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -28,16 +30,13 @@ public class Calendar {
         calendar.add(java.util.Calendar.DAY_OF_MONTH, -monthBeginningCell);
         localDateTime = new ArrayList<>();
         while (localDateTime.size() < DAYS_COUNT) {
-            localDateTime.add(new LocalDateTime(new DateTime(calendar.getTimeInMillis())));
+            localDateTime.add(new LocalDateTime(new DateTime(calendar.getTimeInMillis()), (view, localDateTime) -> onDateClickListener.setOnDateClickListener(view, localDateTime)));
             calendar.add(java.util.Calendar.DAY_OF_MONTH, 1);
         }
     }
 
     public CustomAdapter adapter () {
-        return new CustomAdapter<>(localDateTime, R.layout.control_calendar_day, (BindingInterface<ControlCalendarDayBinding, LocalDateTime>) (controlCalendarDayBinding, localDateTime) -> {
-            controlCalendarDayBinding.setLocalDateTime(localDateTime);
-            controlCalendarDayBinding.setDateClickListener(onDateClickListener);
-        });
+        return new CustomAdapter<>(localDateTime, R.layout.control_calendar_day, (BindingInterface<ControlCalendarDayBinding, LocalDateTime>) ControlCalendarDayBinding::setLocalDateTime);
     }
 
     public String getMonth() {

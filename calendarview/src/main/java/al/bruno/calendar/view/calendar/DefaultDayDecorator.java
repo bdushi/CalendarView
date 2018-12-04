@@ -20,8 +20,7 @@ import androidx.core.content.ContextCompat;
  * Created by bruno on 18/03/2017.
  */
 
-class DefaultDayDecorator implements DayDecorator
-{
+class DefaultDayDecorator implements DayDecorator {
     private Context context;
     private final int selectedDateColor;
     private final int todayDateColor;

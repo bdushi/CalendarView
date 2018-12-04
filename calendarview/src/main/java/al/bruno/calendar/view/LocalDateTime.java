@@ -1,14 +1,20 @@
 package al.bruno.calendar.view;
 
+import android.view.View;
+
 import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class LocalDateTime {
+import androidx.databinding.Observable;
+
+public class LocalDateTime implements OnDateClickListener, Observable {
     private DateTime dateTime;
     private DateTime currentDateTime = new DateTime();
-    LocalDateTime(DateTime dateTime) {
+    private OnDateClickListener onDateClickListener;
+    LocalDateTime(DateTime dateTime, OnDateClickListener onDateClickListener) {
         this.dateTime = dateTime;
+        this.onDateClickListener = onDateClickListener;
     }
     public DateTime getDateTime() {
         return dateTime;
@@ -36,5 +42,20 @@ public class LocalDateTime {
 
     public boolean isCurrentMonth() {
         return dateTime.getMonthOfYear() == currentDateTime.getMonthOfYear() && dateTime.getYear() == currentDateTime.getYear();
+    }
+
+    @Override
+    public void setOnDateClickListener(View view, LocalDateTime localDateTime) {
+        onDateClickListener.setOnDateClickListener(view, localDateTime);
+    }
+
+    @Override
+    public void addOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+
+    }
+
+    @Override
+    public void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback) {
+
     }
 }

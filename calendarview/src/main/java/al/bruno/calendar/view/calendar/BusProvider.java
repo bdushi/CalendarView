@@ -54,8 +54,7 @@ public class BusProvider extends Bus
     }
 
     @Override
-    public void register(Object object)
-    {
+    public void register(Object object) {
         if(objects.contains(object))
             return;
         objects.add(object);

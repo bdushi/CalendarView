@@ -92,22 +92,17 @@ public class WeekCalendar extends LinearLayout
     }
 
     @Subscribe
-    public void onDateClick(Event.OnDateClickEvent event)
-    {
-        if (listener != null)
-        {
+    public void onDateClick(Event.OnDateClickEvent event) {
+        if (listener != null) {
             listener.onDateClick(event.getDateTime());
             month.setText(Utilities.month()[event.getDateTime().getMonthOfYear()]);
         }
     }
 
     @Subscribe
-    public void onDayDecorate(Event.OnDayDecorateEvent event)
-    {
-        if (dayDecorator != null)
-        {
-            dayDecorator.decorate(event.getView(), event.getDayTextView(), event.getDateTime(),
-                    event.getFirstDay(), event.getSelectedDateTime());
+    public void onDayDecorate(Event.OnDayDecorateEvent event) {
+        if (dayDecorator != null) {
+            dayDecorator.decorate(event.getView(), event.getDayTextView(), event.getDateTime(), event.getFirstDay(), event.getSelectedDateTime());
         }
     }
 
@@ -124,8 +119,7 @@ public class WeekCalendar extends LinearLayout
         this.listener = listener;
     }
 
-    public void setDayDecorator(DayDecorator decorator)
-    {
+    public void setDayDecorator(DayDecorator decorator) {
         this.dayDecorator = decorator;
     }
 
