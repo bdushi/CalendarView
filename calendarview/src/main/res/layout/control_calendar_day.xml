@@ -4,10 +4,10 @@
 	<data>
 		<variable
 			name="localDateTime"
-			type="al.bruno.calendar.view.LocalDateTime"/>
+			type="al.bruno.calendar.view.model.LocalDateTime"/>
 		<variable
 			name="dateClickListener"
-			type="al.bruno.calendar.view.OnDateClickListener"/>
+			type="al.bruno.calendar.view.listener.OnDateClickListener"/>
 		<import type="android.view.View"/>
 	</data>
 	<LinearLayout

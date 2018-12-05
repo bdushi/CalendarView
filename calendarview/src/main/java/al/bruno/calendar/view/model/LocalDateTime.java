@@ -1,4 +1,4 @@
-package al.bruno.calendar.view;
+package al.bruno.calendar.view.model;
 
 import android.view.View;
 
@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
+import al.bruno.calendar.view.listener.OnDateClickListener;
 import androidx.databinding.Observable;
 
 public class LocalDateTime implements OnDateClickListener, Observable {

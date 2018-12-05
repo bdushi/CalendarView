@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+	xmlns:android="http://schemas.android.com/apk/res/android">
 	<data>
 		<variable
 			name="calendar"
-			type="al.bruno.calendar.view.Calendar"/>
+			type="al.bruno.calendar.view.model.Calendar"/>
 	</data>
 	<LinearLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
@@ -77,13 +76,8 @@
 				android:text="@string/sunday"
 				style="@style/Base.TextAppearance.AppCompat.Sunday"/>
 		</LinearLayout>
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/calendar_grid"
+		<androidx.viewpager.widget.ViewPager
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:numColumns="7"
-			android:adapter="@{calendar.adapter()}"
-			app:spanCount="7"
-			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+			android:layout_height="wrap_content"/>
 	</LinearLayout>
 </layout>

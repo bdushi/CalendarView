@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import al.bruno.calendar.view.databinding.CalendarViewBinding;
+import al.bruno.calendar.view.listener.OnDateClickListener;
+import al.bruno.calendar.view.model.Calendar;
+import al.bruno.calendar.view.model.LocalDateTime;
 import androidx.databinding.DataBindingUtil;
 
 public class CalendarView extends LinearLayout {
@@ -28,13 +31,15 @@ public class CalendarView extends LinearLayout {
 	}
 
 	private void initControl(Context context, AttributeSet attrs) {
+
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
-		calendarViewBinding.setCalendar(new al.bruno.calendar.view.Calendar().setOnDateClickListener(new OnDateClickListener() {
+		calendarViewBinding.setCalendar(new Calendar().setOnDateClickListener(new OnDateClickListener() {
 			@Override
 			public void setOnDateClickListener(View view, LocalDateTime localDateTime) {
 				onDateClickListener.setOnDateClickListener(view, localDateTime);
 			}
 		}));
+
 	}
 	//@BindingAdapter(value = {"app:onDateClickListener", "app:onClickListener"}, requireAll = false)
 	public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
