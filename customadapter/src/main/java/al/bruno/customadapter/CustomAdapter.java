@@ -14,9 +14,9 @@ public class CustomAdapter<T, VM extends ViewDataBinding> extends RecyclerView.A
     private List<T> t;
     private List<T> o;
     private int resources;
-    private BindingInterface<VM, T> bindingInterface;
+    private BindingInterface<T, VM> bindingInterface;
 
-    public CustomAdapter(List<T> t, int resources, BindingInterface<VM, T> bindingInterface) {
+    public CustomAdapter(List<T> t, int resources, BindingInterface<T, VM> bindingInterface) {
         this.t = t;
         this.o = t;
         this.resources = resources;

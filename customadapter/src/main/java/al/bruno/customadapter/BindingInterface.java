@@ -7,6 +7,6 @@ import androidx.databinding.ViewDataBinding;
  * Created by bruno on 6/23/2017.
  */
 
-public interface BindingInterface<VM extends ViewDataBinding, T> {
-    void bindData(@NonNull VM vm, @NonNull T t);
+public interface BindingInterface<T, VM extends ViewDataBinding> {
+    void bindData(@NonNull T t, @NonNull VM vm);
 }
