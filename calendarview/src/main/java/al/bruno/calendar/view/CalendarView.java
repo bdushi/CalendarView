@@ -17,10 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 public class CalendarView extends LinearLayout implements OnDateClickListener{
 	//event handling
-
-	private final int PREFILLED_MONTHS = 251;
-	private DateTime[] dateTimes;
-	private DateTime dateTime = new DateTime();
+    private final int PREFILLED_MONTHS = 251;
 	private OnDateClickListener onDateClickListener;
 
 	public CalendarView(Context context) {
@@ -39,41 +36,14 @@ public class CalendarView extends LinearLayout implements OnDateClickListener{
 	}
 
 	private void initControl(Context context) {
-		dateTimes = months();
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
-		Calendar calendar = new Calendar(context, dateTimes[PREFILLED_MONTHS / 2]).setOnDateClickListener(this);
-		calendarViewBinding.setCalendar(calendar);
-		calendarViewBinding.monthPager.setCurrentItem(PREFILLED_MONTHS / 2);
-		calendarViewBinding.monthPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			}
-
-			@Override
-			public void onPageSelected(int position) {
-
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int state) {
-                calendar.setDateTime(dateTimes[state]);
-			}
-		});
+		calendarViewBinding.setCalendar(new Calendar().setOnDateClickListener(this));
+		calendarViewBinding.monthPager.setCurrentItem(PREFILLED_MONTHS / 2, true);
 
 	}
 	//@BindingAdapter(value = {"app:onDateClickListener", "app:onClickListener"}, requireAll = false)
 	public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
 		this.onDateClickListener = onDateClickListener;
-	}
-
-	private DateTime[] months() {
-		DateTime[] dateTimes = new DateTime[251];
-		int ii = 0;
-		for (int i = -PREFILLED_MONTHS / 2; i < PREFILLED_MONTHS / 2; i++) {
-			dateTimes[ii] = dateTime.plusMonths(i);
-			ii++;
-		}
-		return dateTimes;
 	}
 
 	@Override

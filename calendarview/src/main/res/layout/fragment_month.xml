@@ -7,11 +7,15 @@
             name="adapter"
             type="al.bruno.customadapter.CustomArrayAdapter"/>
     </data>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendar_grid"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adapter="@{adapter}"
-        app:spanCount="7"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendar_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adapter="@{adapter}"
+            app:spanCount="7"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+    </LinearLayout>
 </layout>
