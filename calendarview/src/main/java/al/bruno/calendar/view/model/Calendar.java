@@ -7,16 +7,12 @@ import org.joda.time.DateTime;
 import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.adapter.MonthAdapter;
-import al.bruno.calendar.view.adapter.MonthPagerAdapter;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
-import al.bruno.customadapter.BindingInterface;
 import al.bruno.customadapter.CustomArrayAdapter;
-import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
@@ -48,6 +44,7 @@ public class Calendar implements Observable {
         return monthAdapter;
     }
 
+    @Bindable
     public DateTime getDateTime() {
         return dateTime;
     }
