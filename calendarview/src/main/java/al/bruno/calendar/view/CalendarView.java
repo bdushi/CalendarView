@@ -16,8 +16,6 @@ import androidx.databinding.DataBindingUtil;
 
 public class CalendarView extends LinearLayout implements OnDateClickListener{
 	//event handling
-
-	private final int PREFILLED_MONTHS = 251;
 	private DateTime dateTime = new DateTime();
 	private OnDateClickListener onDateClickListener;
 
@@ -40,7 +38,6 @@ public class CalendarView extends LinearLayout implements OnDateClickListener{
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
 		Calendar calendar = new Calendar(context, dateTime).setOnDateClickListener(this);
 		calendarViewBinding.setCalendar(calendar);
-		calendarViewBinding.monthPager.setCurrentItem(PREFILLED_MONTHS / 2);
 
 	}
 	//@BindingAdapter(value = {"app:onDateClickListener", "app:onClickListener"}, requireAll = false)
