@@ -24,19 +24,22 @@ import androidx.databinding.PropertyChangeRegistry;
 public class Calendar implements Observable {
     private final int DAYS_COUNT = 42;
     private final int PREFILLED_MONTHS = 251;
-    private DateTime dateTime = new DateTime();
-    private DateTime[] dateTimes = months();
+    private DateTime dateTime;
+    private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
     private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
     /**
      * Display dates correctly in grid
      */
-    public Calendar() {
+    public Calendar(DateTime dateTime) {
+        this.dateTime = dateTime;
+        this.dateTimes = months(dateTime);
         monthAdapter = new MonthAdapter((viewGroup, position) -> {
             setDateTime(dateTimes[position]);
             FragmentMonthBinding fragmentMonth = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.fragment_month, viewGroup, false);
-            fragmentMonth.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTime(dateTime), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
+            fragmentMonth.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTime(dateTimes[position]), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
+            viewGroup.addView(fragmentMonth.getRoot());
             return fragmentMonth.getRoot();
         }, dateTimes.length);
     }
@@ -45,19 +48,22 @@ public class Calendar implements Observable {
         return monthAdapter;
     }
 
-    @Bindable
     public DateTime getDateTime() {
         return dateTime;
     }
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
-        propertyChangeRegistry.notifyChange(this, BR.dateTime);
+        propertyChangeRegistry.notifyChange(this, BR.month);
+        propertyChangeRegistry.notifyChange(this, BR.year);
     }
+
+    @Bindable
     public String getMonth() {
         return Utilities.month()[dateTime.getMonthOfYear()];
     }
 
+    @Bindable
     public String getYear() {
         return String.format("%s", dateTime.getYear());
     }
@@ -105,7 +111,7 @@ public class Calendar implements Observable {
         return localDateTime;
     }
 
-    private DateTime[] months() {
+    private DateTime[] months(DateTime dateTime) {
         DateTime[] dateTimes = new DateTime[251];
         int ii = 0;
         for (int i = -PREFILLED_MONTHS / 2; i < PREFILLED_MONTHS / 2; i++) {
