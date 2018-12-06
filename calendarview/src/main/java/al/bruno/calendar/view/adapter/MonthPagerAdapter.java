@@ -1,25 +1,28 @@
 package al.bruno.calendar.view.adapter;
 
 import al.bruno.calendar.view.MonthFragment;
-import al.bruno.calendar.view.model.LocalDateTime;
+import al.bruno.calendar.view.listener.NavigationListener;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class MonthPagerAdapter extends FragmentStatePagerAdapter {
-    private LocalDateTime[] localDateTime;
-    public MonthPagerAdapter(FragmentManager fm, LocalDateTime[] localDateTime) {
+    @Nullable private NavigationListener<MonthFragment, Integer> navigationListener;
+    private int count;
+    public MonthPagerAdapter(FragmentManager fm, int count, @Nullable NavigationListener<MonthFragment, Integer> navigationListener) {
         super(fm);
-        this.localDateTime = localDateTime;
+        this.navigationListener = navigationListener;
+        this.count = count;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new MonthFragment.Builder().setLocalDateTimes(localDateTime).build();
+        return navigationListener.update(position);
     }
 
     @Override
     public int getCount() {
-        return 251;
+        return count;
     }
 }

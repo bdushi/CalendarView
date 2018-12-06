@@ -5,6 +5,7 @@ import android.content.Context;
 import org.joda.time.DateTime;
 
 import al.bruno.calendar.view.BR;
+import al.bruno.calendar.view.MonthFragment;
 import al.bruno.calendar.view.adapter.MonthPagerAdapter;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
@@ -15,8 +16,9 @@ import androidx.databinding.PropertyChangeRegistry;
 
 public class Calendar implements Observable {
     private final int DAYS_COUNT = 42;
+    private final int PREFILLED_MONTHS = 251;
     private DateTime dateTime;
-    private LocalDateTime[] localDateTime;
+    private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
     private MonthPagerAdapter monthPagerAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
@@ -25,40 +27,34 @@ public class Calendar implements Observable {
      */
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
-        localDateTime = dateTime(dateTime);
-        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity) context).getSupportFragmentManager(), localDateTime);
+        this.dateTimes = months(dateTime);
+        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity) context).getSupportFragmentManager(), dateTimes.length, integer -> {
+            setDateTime(dateTimes[integer]);
+            return new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer])).build();
+        });
     }
-
-    /*public CustomAdapter adapter () {
-        return new CustomAdapter<>(localDateTime, R.layout.control_calendar_day, (BindingInterface<ControlCalendarDayBinding, LocalDateTime>) ControlCalendarDayBinding::setLocalDateTime);
-    }*/
 
     public MonthPagerAdapter getMonthPagerAdapter() {
         return monthPagerAdapter;
     }
 
-    @Bindable
+
     public DateTime getDateTime() {
         return dateTime;
     }
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
-        propertyChangeRegistry.notifyChange(this, BR.dateTime);
-        monthPagerAdapter.notifyDataSetChanged();
+        propertyChangeRegistry.notifyChange(this, BR.month);
+        propertyChangeRegistry.notifyChange(this, BR.year);
     }
 
-    public LocalDateTime[] getLocalDateTime() {
-        return localDateTime;
-    }
-
+    @Bindable
     public String getMonth() {
         return Utilities.month()[dateTime.getMonthOfYear()];
-        //Utilities.months()[calendar.get(java.util.Calendar.MONTH)];
     }
-
+    @Bindable
     public String getYear() {
-        //calendar.get(java.util.Calendar.YEAR)
         return String.format("%s", dateTime.getYear());
     }
 
@@ -103,6 +99,16 @@ public class Calendar implements Observable {
             value++;
         }
         return localDateTime;
+    }
+
+    private DateTime[] months(DateTime dateTime) {
+        DateTime[] dateTimes = new DateTime[PREFILLED_MONTHS];
+        int ii = 0;
+        for (int i = -PREFILLED_MONTHS / 2; i < PREFILLED_MONTHS / 2; i++) {
+            dateTimes[ii] = dateTime.plusMonths(i);
+            ii++;
+        }
+        return dateTimes;
     }
 
     @Override
