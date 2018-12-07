@@ -1,23 +1,5 @@
-<LinearLayout
+<al.bruno.calendar.view.CalendarView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/calendar_view"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
-	<al.bruno.calendar.view.CalendarView
-		android:id="@+id/calendar_view"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"/>
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="1">
-		<androidx.appcompat.widget.AppCompatButton
-			android:id="@+id/date"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:text="Date"
-			style="@style/Base.Widget.AppCompat.Button.ButtonBar.AlertDialog"/>
-	</RelativeLayout>
-</LinearLayout>
+	android:layout_height="wrap_content"/>

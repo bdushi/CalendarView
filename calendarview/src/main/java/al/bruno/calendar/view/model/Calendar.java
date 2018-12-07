@@ -2,8 +2,6 @@ package al.bruno.calendar.view.model;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.joda.time.DateTime;
 
@@ -26,7 +24,6 @@ import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 
 public class Calendar implements Observable {
     private final int DAYS_COUNT = 42;
-    private final int PREFILLED_MONTHS = 251;
     private DateTime dateTime;
     private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
@@ -127,6 +124,7 @@ public class Calendar implements Observable {
     }
 
     private DateTime[] months(DateTime dateTime) {
+        int PREFILLED_MONTHS = 251;
         DateTime[] dateTimes = new DateTime[PREFILLED_MONTHS];
         int ii = 0;
         for (int i = -PREFILLED_MONTHS / 2; i < PREFILLED_MONTHS / 2; i++) {

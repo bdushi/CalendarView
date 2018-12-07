@@ -100,7 +100,7 @@
 			android:layout_alignParentStart="true"
 			android:layout_alignParentEnd="true"
 			android:layout_alignParentBottom="true"
-			bind:adapter="@{calendar.monthAdapter}"
+			bind:adapter="@{calendar.monthPagerAdapter}"
 			bind:listener="@{calendar.onPageChangeListener}" />
 	</RelativeLayout>
 </layout>

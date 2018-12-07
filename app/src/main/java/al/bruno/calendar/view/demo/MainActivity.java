@@ -15,8 +15,5 @@ public class MainActivity extends AppCompatActivity {
 		mCalendarView.setOnDateClickListener((view, localDateTime) -> {
 			Toast.makeText(MainActivity.this, localDateTime.date().toString(), Toast.LENGTH_LONG).show();
 		});
-		findViewById(R.id.date).setOnClickListener((v) -> {
-			new DateDialogFragment().show(getSupportFragmentManager(), "DATE");
-		});
 	}
 }

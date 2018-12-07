@@ -5,8 +5,7 @@ import android.os.Parcelable;
 import android.view.View;
 
 import org.joda.time.DateTime;
-
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import androidx.databinding.Bindable;
@@ -15,7 +14,7 @@ import androidx.databinding.PropertyChangeRegistry;
 
 public class LocalDateTime implements OnDateClickListener, Observable, Parcelable {
     private DateTime dateTime;
-    private DateTime currentDateTime = new DateTime();
+    private DateTime currentDateTime = DateTime.now();
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
 
     private OnDateClickListener onDateClickListener;
@@ -34,8 +33,8 @@ public class LocalDateTime implements OnDateClickListener, Observable, Parcelabl
         this.dateTime = dateTime;
     }
 
-    public Date date() {
-        return new Date(dateTime.getMillis());
+    public LocalDate date() {
+        return new LocalDate(dateTime.getMillis());
     }
 
     public String getDate() {
