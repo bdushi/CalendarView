@@ -30,7 +30,7 @@ public class Calendar implements Observable {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
         monthPagerAdapter =
-                new MonthPagerAdapter(((AppCompatActivity) context).getSupportFragmentManager(), dateTimes.length, integer
+                new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer
                         -> new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer])).build());
     }
 

@@ -9,11 +9,11 @@
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/calendar_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:adapter="@{adapter}"
             app:spanCount="7"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
