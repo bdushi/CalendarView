@@ -33,6 +33,19 @@ public class Calendar implements Observable {
     /**
      * Display dates correctly in grid
      */
+
+    /*if(dateTimeEvent != null) {
+        for (DateTime event : dateTimeEvent) {
+            if (curDay.equals(event)) {
+                localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), true);
+            } else {
+                localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
+            }
+        }
+    } else {
+        localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
+    }*/
+
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
@@ -41,7 +54,7 @@ public class Calendar implements Observable {
                         -> new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer])).build());
     }
 
-    public Calendar(DateTime dateTime) {
+    public Calendar(DateTime dateTime, DateTime[] dateTimeEvent) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
         monthAdapter =
@@ -94,8 +107,9 @@ public class Calendar implements Observable {
         // move calendar backwards to the beginning of the week
         calendar.add(java.util.Calendar.DAY_OF_MONTH, -monthBeginningCell);
         // how many days to show, defaults to six weeks, 42 days
+        // (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld)
         for (int i = 0; i < DAYS_COUNT; i++) {
-            localDateTime[i] = new LocalDateTime(new DateTime(calendar.getTimeInMillis()), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld));
+            localDateTime[i] = new LocalDateTime(new DateTime(calendar.getTimeInMillis()), onDateClickListener, false);
             calendar.add(java.util.Calendar.DAY_OF_MONTH, 1);
         }
         return localDateTime;
@@ -117,7 +131,7 @@ public class Calendar implements Observable {
                     value = 1;
                     curDay = dateTime.withDayOfMonth(1).plusMonths(1);
             }
-            localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld));
+            localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
             value++;
         }
         return localDateTime;
