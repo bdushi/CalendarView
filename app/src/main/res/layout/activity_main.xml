@@ -1,17 +1,5 @@
-<LinearLayout
+<al.bruno.calendar.view.CalendarView
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/calendar_view"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
-	<al.bruno.calendar.view.CalendarView
-		android:id="@+id/calendar_view"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
-	<!--<al.bruno.calendar.view.calendar.WeekCalendar
-		android:layout_width="wrap_content"
-		android:layout_height="45dp"/>-->
-	<!--<al.bruno.calendar.view.CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMMM yyyy"/>-->
-</LinearLayout>
+	android:layout_height="match_parent"/>

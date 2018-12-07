@@ -1,10 +1,11 @@
-package al.bruno.calendar.view;
+package al.bruno.calendar.view.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.model.LocalDateTime;

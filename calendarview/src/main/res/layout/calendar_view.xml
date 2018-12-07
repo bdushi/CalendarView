@@ -81,6 +81,7 @@
 			android:id="@+id/month_pager"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			bind:listener="@{calendar.onPageChangeListener}"
 			bind:adapter="@{calendar.monthPagerAdapter}"/>
 	</LinearLayout>
 </layout>

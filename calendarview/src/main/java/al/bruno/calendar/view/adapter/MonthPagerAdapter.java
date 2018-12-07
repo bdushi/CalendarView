@@ -1,6 +1,6 @@
 package al.bruno.calendar.view.adapter;
 
-import al.bruno.calendar.view.MonthFragment;
+import al.bruno.calendar.view.fragment.MonthFragment;
 import al.bruno.calendar.view.listener.NavigationListener;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
