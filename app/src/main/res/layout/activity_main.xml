@@ -6,12 +6,18 @@
 	<al.bruno.calendar.view.CalendarView
 		android:id="@+id/calendar_view"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
-	<!--<al.bruno.calendar.view.calendar.WeekCalendar
-		android:layout_width="wrap_content"
-		android:layout_height="45dp"/>-->
-	<!--<al.bruno.calendar.view.CalendarView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        calendarNS:dateFormat="MMMM yyyy"/>-->
+		android:layout_height="0dp"
+		android:layout_weight="1"/>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1">
+		<androidx.appcompat.widget.AppCompatButton
+			android:id="@+id/date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="Date"
+			style="@style/Base.Widget.AppCompat.Button.ButtonBar.AlertDialog"/>
+	</RelativeLayout>
 </LinearLayout>

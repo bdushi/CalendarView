@@ -13,8 +13,10 @@ import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.calendar.view.model.Calendar;
 import al.bruno.calendar.view.model.LocalDateTime;
 import androidx.databinding.DataBindingUtil;
+
 public class CalendarView extends LinearLayout implements OnDateClickListener{
 	//event handling
+
 	private DateTime dateTime = new DateTime();
 	private OnDateClickListener onDateClickListener;
 
