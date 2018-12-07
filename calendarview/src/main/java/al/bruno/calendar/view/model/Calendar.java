@@ -5,11 +5,16 @@ import android.view.LayoutInflater;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.adapter.MonthAdapter;
 import al.bruno.calendar.view.fragment.MonthFragment;
 import al.bruno.calendar.view.adapter.MonthPagerAdapter;
+import al.bruno.calendar.view.observer.Observer;
+import al.bruno.calendar.view.observer.Subject;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.customadapter.CustomArrayAdapter;
@@ -22,7 +27,7 @@ import androidx.viewpager.widget.ViewPager;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 
-public class Calendar implements Observable {
+public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> {
     private final int DAYS_COUNT = 42;
     private DateTime dateTime;
     private DateTime[] dateTimes;
@@ -30,6 +35,7 @@ public class Calendar implements Observable {
     private MonthPagerAdapter monthPagerAdapter;
     private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
+    private List<Observer<MonthFragment, DateTime[]>> observers = new ArrayList<>();
     /**
      * Display dates correctly in grid
      */
@@ -174,4 +180,19 @@ public class Calendar implements Observable {
 
         }
     };
+
+    @Override
+    public void registerObserver(Observer<MonthFragment, DateTime[]> o) {
+
+    }
+
+    @Override
+    public void removeObserver(Observer<MonthFragment, DateTime[]> o) {
+
+    }
+
+    @Override
+    public void notifyObserver(DateTime[] dateTimes) {
+
+    }
 }

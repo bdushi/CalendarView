@@ -5,18 +5,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.joda.time.DateTime;
+
 import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.model.LocalDateTime;
+import al.bruno.calendar.view.observer.Observer;
 import al.bruno.customadapter.CustomArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-public class MonthFragment extends Fragment {
+public class MonthFragment extends Fragment implements Observer<MonthFragment, DateTime[]> {
     private static final String LOCAL_DATE_TIME = "LOCAL_DATE_TIME";
+
+    @Override
+    public MonthFragment update(DateTime[] dateTimes) {
+        return this;
+    }
+
     public static class Builder {
         private LocalDateTime[] localDateTimes;
         public MonthFragment.Builder setLocalDateTimes(LocalDateTime[] localDateTimes) {
