@@ -4,11 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
-
 import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.adapter.MonthAdapter;
@@ -29,17 +28,18 @@ import androidx.viewpager.widget.ViewPager;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 
-import static al.bruno.calendar.view.util.Utilities.DAYS_COUNT;
+import static al.bruno.calendar.view.util.Constants.DAYS_COUNT;
+import static al.bruno.calendar.view.util.Constants.PREFILLED_MONTHS;
 
-public class Calendar implements Observable, Subject<DateTime[]> {
+public class Calendar implements Observable, Subject<LocalDate[]> {
     private DateTime dateTime;
     private DateTime[] dateTimes;
-    private DateTime[] dateTimeEvent;
+    private LocalDate[] dateTimeEvent;
     private OnDateClickListener onDateClickListener;
     private MonthPagerAdapter monthPagerAdapter;
     private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    private List<Observer<DateTime[]>> registry = new ArrayList<>();
+    private List<Observer<LocalDate[]>> registry = new ArrayList<>();
     /**
      * Display dates correctly in grid
      */
@@ -140,7 +140,6 @@ public class Calendar implements Observable, Subject<DateTime[]> {
     }
 
     private DateTime[] months(DateTime dateTime) {
-        int PREFILLED_MONTHS = 251;
         DateTime[] dateTimes = new DateTime[PREFILLED_MONTHS];
         int ii = 0;
         for (int i = -PREFILLED_MONTHS / 2; i < PREFILLED_MONTHS / 2; i++) {
@@ -179,25 +178,25 @@ public class Calendar implements Observable, Subject<DateTime[]> {
     };
 
     @Override
-    public void removeObserver(Observer<DateTime[]> o) {
+    public void removeObserver(Observer<LocalDate[]> o) {
         if (registry.indexOf(o) >= 0)
             registry.remove(o);
     }
 
 
     @Override
-    public void registerObserver(Observer<DateTime[]> o) {
+    public void registerObserver(Observer<LocalDate[]> o) {
         registry.add(o);
     }
 
     @Override
-    public void notifyObserver(DateTime[] dateTimes) {
-        for (Observer<DateTime[]> observer : registry) {
+    public void notifyObserver(LocalDate[] dateTimes) {
+        for (Observer<LocalDate[]> observer : registry) {
             observer.update(dateTimes);
         }
     }
 
-    public void setEvent(DateTime[] dateTimeEvent) {
+    public void setEvent(LocalDate[] dateTimeEvent) {
         this.dateTimeEvent = dateTimeEvent;
     }
 }
