@@ -34,8 +34,6 @@ public class MonthFragment extends Fragment implements Observer<DateTime[]> {
                         localDateTime.setEvent(false);
                 }
             }
-        } else {
-            throw new IllegalArgumentException("null argument");
         }
     }
 

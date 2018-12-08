@@ -14,12 +14,12 @@ import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.adapter.MonthAdapter;
 import al.bruno.calendar.view.fragment.MonthFragment;
 import al.bruno.calendar.view.adapter.MonthPagerAdapter;
+import al.bruno.calendar.view.listener.NavigationListener;
 import al.bruno.calendar.view.observer.Observer;
 import al.bruno.calendar.view.observer.Subject;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.customadapter.CustomArrayAdapter;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
@@ -34,6 +34,7 @@ import static al.bruno.calendar.view.util.Utilities.DAYS_COUNT;
 public class Calendar implements Observable, Subject<DateTime[]> {
     private DateTime dateTime;
     private DateTime[] dateTimes;
+    private DateTime[] dateTimeEvent;
     private OnDateClickListener onDateClickListener;
     private MonthPagerAdapter monthPagerAdapter;
     private MonthAdapter monthAdapter;
@@ -45,7 +46,14 @@ public class Calendar implements Observable, Subject<DateTime[]> {
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
-        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer -> new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer], onDateClickListener)).build());
+        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, new NavigationListener<MonthFragment, Integer>() {
+            @Override
+            public MonthFragment update(Integer integer) {
+                MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
+                registerObserver(monthFragment);
+                return monthFragment;
+            }
+        });
     }
 
     public Calendar(DateTime dateTime) {
@@ -156,7 +164,7 @@ public class Calendar implements Observable, Subject<DateTime[]> {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             setDateTime(dateTimes[position]);
-            registerObserver(monthPagerAdapter.getItem(position));
+            notifyObserver(dateTimeEvent);
         }
 
         @Override
@@ -190,8 +198,6 @@ public class Calendar implements Observable, Subject<DateTime[]> {
     }
 
     public void setEvent(DateTime[] dateTimeEvent) {
-        new android.os.Handler().postDelayed(() -> {
-            notifyObserver(dateTimeEvent);
-        }, 3000);
+        this.dateTimeEvent = dateTimeEvent;
     }
 }
