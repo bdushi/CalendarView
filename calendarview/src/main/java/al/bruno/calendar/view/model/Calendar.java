@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
@@ -18,6 +19,7 @@ import al.bruno.calendar.view.observer.Subject;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.customadapter.CustomArrayAdapter;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.Bindable;
 import androidx.databinding.DataBindingUtil;
@@ -27,46 +29,32 @@ import androidx.viewpager.widget.ViewPager;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 
-public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> {
-    private final int DAYS_COUNT = 42;
+import static al.bruno.calendar.view.util.Utilities.DAYS_COUNT;
+
+public class Calendar implements Observable, Subject<DateTime[]> {
     private DateTime dateTime;
     private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
     private MonthPagerAdapter monthPagerAdapter;
     private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    private List<Observer<MonthFragment, DateTime[]>> observers = new ArrayList<>();
+    private List<Observer<DateTime[]>> registry = new ArrayList<>();
     /**
      * Display dates correctly in grid
      */
-
-    /*if(dateTimeEvent != null) {
-        for (DateTime event : dateTimeEvent) {
-            if (curDay.equals(event)) {
-                localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), true);
-            } else {
-                localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
-            }
-        }
-    } else {
-        localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
-    }*/
-
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
-        monthPagerAdapter =
-                new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer
-                        -> new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer])).build());
+        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer -> new MonthFragment.Builder().setLocalDateTimes(dateTime(dateTimes[integer], onDateClickListener)).build());
     }
 
-    public Calendar(DateTime dateTime, DateTime[] dateTimeEvent) {
+    public Calendar(DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
         monthAdapter =
                 new MonthAdapter((viewGroup, position) -> {
                     FragmentMonthBinding fragmentMonth = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.fragment_month, viewGroup, false);
-                    fragmentMonth.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTime(dateTimes[position]), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
+                    fragmentMonth.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTime(dateTimes[position], onDateClickListener), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
                     viewGroup.addView(fragmentMonth.getRoot());
                     return fragmentMonth.getRoot();
                 }, dateTimes.length);
@@ -115,12 +103,12 @@ public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> 
         // how many days to show, defaults to six weeks, 42 days
         // (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld)
         for (int i = 0; i < DAYS_COUNT; i++) {
-            localDateTime[i] = new LocalDateTime(new DateTime(calendar.getTimeInMillis()), onDateClickListener, false);
+            localDateTime[i] = new LocalDateTime(new DateTime(calendar.getTimeInMillis()), onDateClickListener);
             calendar.add(java.util.Calendar.DAY_OF_MONTH, 1);
         }
         return localDateTime;
     }
-    private LocalDateTime[] dateTime(DateTime dateTime) {
+    private LocalDateTime[] dateTime(DateTime dateTime, OnDateClickListener onDateClickListener) {
         LocalDateTime[] localDateTime = new LocalDateTime[DAYS_COUNT];
         int currMonthDays = dateTime.dayOfMonth().getMaximumValue();
         int firstDayIndex = dateTime.withDayOfMonth(1).getDayOfWeek();
@@ -137,7 +125,7 @@ public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> 
                     value = 1;
                     curDay = dateTime.withDayOfMonth(1).plusMonths(1);
             }
-            localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), (view, ld) -> onDateClickListener.setOnDateClickListener(view, ld), false);
+            localDateTime[i] = new LocalDateTime(curDay.withDayOfMonth(value), onDateClickListener);
             value++;
         }
         return localDateTime;
@@ -168,6 +156,7 @@ public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             setDateTime(dateTimes[position]);
+            registerObserver(monthPagerAdapter.getItem(position));
         }
 
         @Override
@@ -182,17 +171,27 @@ public class Calendar implements Observable, Subject<MonthFragment, DateTime[]> 
     };
 
     @Override
-    public void registerObserver(Observer<MonthFragment, DateTime[]> o) {
-
+    public void removeObserver(Observer<DateTime[]> o) {
+        if (registry.indexOf(o) >= 0)
+            registry.remove(o);
     }
 
-    @Override
-    public void removeObserver(Observer<MonthFragment, DateTime[]> o) {
 
+    @Override
+    public void registerObserver(Observer<DateTime[]> o) {
+        registry.add(o);
     }
 
     @Override
     public void notifyObserver(DateTime[] dateTimes) {
+        for (Observer<DateTime[]> observer : registry) {
+            observer.update(dateTimes);
+        }
+    }
 
+    public void setEvent(DateTime[] dateTimeEvent) {
+        new android.os.Handler().postDelayed(() -> {
+            notifyObserver(dateTimeEvent);
+        }, 3000);
     }
 }

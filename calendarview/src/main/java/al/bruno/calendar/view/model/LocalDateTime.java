@@ -1,5 +1,6 @@
 package al.bruno.calendar.view.model;
 
+import al.bruno.calendar.view.BR;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
@@ -20,9 +21,8 @@ public class LocalDateTime implements OnDateClickListener, Observable, Parcelabl
 
     private OnDateClickListener onDateClickListener;
 
-    LocalDateTime(DateTime dateTime, OnDateClickListener onDateClickListener, boolean event) {
+    public LocalDateTime(DateTime dateTime, OnDateClickListener onDateClickListener) {
         this.dateTime = dateTime;
-        this.event = event;
         this.onDateClickListener = onDateClickListener;
     }
 
@@ -66,18 +66,20 @@ public class LocalDateTime implements OnDateClickListener, Observable, Parcelabl
     }
 
     public LocalDate date() {
-        return new LocalDate(dateTime.getMillis());
+        return dateTime.toLocalDate();
     }
 
     public String getDate() {
         return String.valueOf(dateTime.getDayOfMonth());
     }
 
+    @Bindable
     public boolean isEvent() {
         return event;
     }
 
     public void setEvent(boolean event) {
+        propertyChangeRegistry.notifyChange(this, BR.event);
         this.event = event;
     }
 

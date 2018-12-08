@@ -12,13 +12,13 @@ import al.bruno.calendar.view.databinding.CalendarViewBinding;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.calendar.view.model.Calendar;
 import al.bruno.calendar.view.model.LocalDateTime;
-import androidx.databinding.BindingAdapter;
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
-public class CalendarView extends LinearLayout implements OnDateClickListener{
+public class CalendarView extends LinearLayout implements OnDateClickListener {
 	//event handling
 	private OnDateClickListener onDateClickListener;
-	private DateTime[] dateTimeEvent;
+	private Calendar calendar;
 
 	public CalendarView(Context context) {
 		super(context);
@@ -37,20 +37,23 @@ public class CalendarView extends LinearLayout implements OnDateClickListener{
 
 	private void initControl(Context context) {
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
-		calendarViewBinding.setCalendar(new Calendar(context, DateTime.now()).setOnDateClickListener(this));
+		calendar = new Calendar(context, DateTime.now()).setOnDateClickListener(this);
+		calendarViewBinding.setCalendar(calendar);
 
 	}
 
-	@BindingAdapter(value = {"app:onDateClickListener"}, requireAll = false)
+	//@BindingAdapter(value = {"app:onDateClickListener"}, requireAll = false)
     public void setOnDateClickListener(CalendarView calendarView, OnDateClickListener onDateClickListener) {
 	    calendarView.setOnDateClickListener(onDateClickListener);
     }
+
 	public void setOnDateClickListener(OnDateClickListener onDateClickListener) {
 		this.onDateClickListener = onDateClickListener;
 	}
 
-	public void setEvent(DateTime[] dateTimeEvent) {
-	    this.dateTimeEvent = dateTimeEvent;
+	//@BindingAdapter(value = {"app:event"}, requireAll = false)
+	public void setEvent(@NonNull DateTime[] dateTimeEvent) {
+		calendar.setEvent(dateTimeEvent);
     }
 
 	@Override

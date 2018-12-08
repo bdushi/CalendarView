@@ -1,9 +1,7 @@
 package al.bruno.calendar.view.adapter;
-
 import al.bruno.calendar.view.fragment.MonthFragment;
 import al.bruno.calendar.view.listener.NavigationListener;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
@@ -17,7 +15,7 @@ public class MonthPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public MonthFragment getItem(int position) {
         return navigationListener.update(position);
     }
 

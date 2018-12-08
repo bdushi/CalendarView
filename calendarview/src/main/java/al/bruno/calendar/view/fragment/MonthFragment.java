@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
@@ -18,12 +19,24 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-public class MonthFragment extends Fragment implements Observer<MonthFragment, DateTime[]> {
+public class MonthFragment extends Fragment implements Observer<DateTime[]> {
     private static final String LOCAL_DATE_TIME = "LOCAL_DATE_TIME";
+    private LocalDateTime[] localDateTimes;
 
     @Override
-    public MonthFragment update(DateTime[] dateTimes) {
-        return this;
+    public void update(DateTime[] dateTimes) {
+        if(localDateTimes != null && dateTimes != null) {
+            for (LocalDateTime localDateTime : localDateTimes) {
+                for (DateTime dateTime : dateTimes) {
+                    if (dateTime.toLocalDate().isEqual(localDateTime.date()))
+                        localDateTime.setEvent(true);
+                    else
+                        localDateTime.setEvent(false);
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("null argument");
+        }
     }
 
     public static class Builder {
@@ -47,17 +60,22 @@ public class MonthFragment extends Fragment implements Observer<MonthFragment, D
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            localDateTimes = (LocalDateTime[]) getArguments().getParcelableArray(LOCAL_DATE_TIME);
+        } else
+            throw new IllegalArgumentException("null argument");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentMonthBinding fragmentMonthBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.fragment_month, container, false);
-        if(getArguments() != null)
-            fragmentMonthBinding.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>((LocalDateTime[]) getArguments().getParcelableArray(LOCAL_DATE_TIME), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
-        else
-            throw new IllegalArgumentException("argument is null");
+        if(localDateTimes != null) {
+            fragmentMonthBinding.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(localDateTimes, R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
+        } else {
+            throw new IllegalArgumentException("null argument");
+        }
         return fragmentMonthBinding.getRoot();
     }
 }
