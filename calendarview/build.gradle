@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 28
@@ -42,17 +40,19 @@ dependencies {
 
 ext {
     bintrayRepo = 'brddev'
-    bintrayName = 'al.bruno.calendar.view'
-    libraryName = 'CalendarView'
+    bintrayName = 'CustomCalendarView'
 
     publishedGroupId = 'al.bruno.calendar.view'
-    artifact = 'al.bruno.calendar.view'
+    libraryName = 'CalendarView'
+    artifact = 'calendar.view'
+
+    libraryDescription = 'Easy to use Calendar View using Databinding'
+
+    siteUrl = 'https://github.com/brddev/CalendarViewDemo'
+    gitUrl = 'https://github.com/brddev/CalendarViewDemo.git'
+
     libraryVersion = '0.0.1'
 
-    //libraryDescription = 'This view is a container that supports diagonal scroll and fling gesture. It is based on AOSP HorizontalScrollView.'
-    //siteUrl = 'https://github.com/LissF/DiagonalScrollView'
-    //gitUrl = 'https://github.com/LissF/DiagonalScrollView.git'
-    
     developerId = 'brddev'
     developerName = 'Bruno Dushi'
     developerEmail = 'brddev@gmail.com'
@@ -61,3 +61,7 @@ ext {
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
 }
+
+//apply from: 'publish.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
