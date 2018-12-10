@@ -4,17 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import al.bruno.calendar.view.R;
+import al.bruno.calendar.view.adapter.CustomArrayAdapter;
 import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.model.LocalDateTime;
 import al.bruno.calendar.view.observer.Observer;
-import al.bruno.customadapter.CustomArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;

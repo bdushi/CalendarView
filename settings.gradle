@@ -1,1 +1,1 @@
-include ':app', ':customadapter', ':calendarview'
+include ':app', ':calendarview'

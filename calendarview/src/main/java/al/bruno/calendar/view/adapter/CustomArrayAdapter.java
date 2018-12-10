@@ -1,4 +1,4 @@
-package al.bruno.customadapter;
+package al.bruno.calendar.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
