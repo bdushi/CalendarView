@@ -46,13 +46,10 @@ public class Calendar implements Observable, Subject<LocalDate[]> {
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
-        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, new NavigationListener<MonthFragment, Integer>() {
-            @Override
-            public MonthFragment update(Integer integer) {
-                MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
-                registerObserver(monthFragment);
-                return monthFragment;
-            }
+        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer -> {
+            MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
+            registerObserver(monthFragment);
+            return monthFragment;
         });
     }
 

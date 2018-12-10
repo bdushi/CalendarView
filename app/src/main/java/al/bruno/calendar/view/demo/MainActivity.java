@@ -18,12 +18,7 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-		activityMainBinding.setOnDateClickListener(new OnDateClickListener() {
-			@Override
-			public void setOnDateClickListener(View view, LocalDateTime localDateTime) {
-				Toast.makeText(MainActivity.this, localDateTime.date().toString(), Toast.LENGTH_SHORT).show();
-			}
-		});
+		activityMainBinding.setOnDateClickListener((view, localDateTime) -> Toast.makeText(MainActivity.this, localDateTime.date().toString(), Toast.LENGTH_SHORT).show());
 		activityMainBinding.setEvent(new LocalDate[]{
 				new LocalDate("2018-12-05"),
 				new LocalDate("2018-12-07"),

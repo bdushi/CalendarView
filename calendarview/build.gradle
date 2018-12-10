@@ -44,14 +44,14 @@ ext {
 
     publishedGroupId = 'al.bruno.calendar.view'
     libraryName = 'CalendarView'
-    artifact = 'calendar.view'
+    artifact = 'calendar-view'
 
     libraryDescription = 'Easy to use Calendar View using Databinding'
 
     siteUrl = 'https://github.com/brddev/CalendarViewDemo'
     gitUrl = 'https://github.com/brddev/CalendarViewDemo.git'
 
-    libraryVersion = '0.0.1'
+    libraryVersion = '0.0.2'
 
     developerId = 'brddev'
     developerName = 'Bruno Dushi'
