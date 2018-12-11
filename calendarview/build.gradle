@@ -40,10 +40,10 @@ dependencies {
 
 ext {
     bintrayRepo = 'brddev'
-    bintrayName = 'CustomCalendarView'
+    bintrayName = 'CalendarView'
 
-    publishedGroupId = 'al.bruno.calendar.view'
-    libraryName = 'CalendarView'
+    publishedGroupId = 'al.bruno'
+    libraryName = 'calendar-view'
     artifact = 'calendar-view'
 
     libraryDescription = 'Easy to use Calendar View using Databinding'
@@ -51,7 +51,7 @@ ext {
     siteUrl = 'https://github.com/brddev/CalendarViewDemo'
     gitUrl = 'https://github.com/brddev/CalendarViewDemo.git'
 
-    libraryVersion = '0.0.3'
+    libraryVersion = '0.0.1'
 
     developerId = 'brddev'
     developerName = 'Bruno Dushi'
