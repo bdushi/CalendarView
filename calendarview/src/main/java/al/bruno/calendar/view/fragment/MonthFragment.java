@@ -12,16 +12,22 @@ import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.model.LocalDateTime;
 import al.bruno.calendar.view.observer.Observer;
+import al.bruno.calendar.view.rx.MyRxBus;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
-public class MonthFragment extends Fragment implements Observer<LocalDate[]> {
+public class MonthFragment extends Fragment /*implements Observer<LocalDate[]> */{
     private static final String LOCAL_DATE_TIME = "LOCAL_DATE_TIME";
     private LocalDateTime[] localDateTimes;
-
-    @Override
+    private MyRxBus myRxBus = new MyRxBus();
+    private CompositeDisposable disposable = new CompositeDisposable();
+    /*@Override
     public void update(LocalDate[] dateTimes) {
         if(localDateTimes != null && dateTimes != null) {
             for (LocalDateTime localDateTime : localDateTimes) {
@@ -31,7 +37,7 @@ public class MonthFragment extends Fragment implements Observer<LocalDate[]> {
                 }
             }
         }
-    }
+    }*/
 
     public static class Builder {
         private LocalDateTime[] localDateTimes;
@@ -71,5 +77,29 @@ public class MonthFragment extends Fragment implements Observer<LocalDate[]> {
             throw new IllegalArgumentException("null argument");
         }
         return fragmentMonthBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        disposable.add(myRxBus.toObserverable().subscribe(new Consumer<LocalDate[]>() {
+            @Override
+            public void accept(LocalDate[] localDates) {
+                if(localDateTimes != null && localDates != null) {
+                    for (LocalDateTime localDateTime : localDateTimes) {
+                        for (LocalDate dateTime : localDates) {
+                            if (dateTime.isEqual(localDateTime.date()))
+                                localDateTime.setEvent(true);
+                        }
+                    }
+                }
+            }
+        }));
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposable.clear();
     }
 }

@@ -14,9 +14,7 @@ import al.bruno.calendar.view.adapter.CustomArrayAdapter;
 import al.bruno.calendar.view.adapter.MonthAdapter;
 import al.bruno.calendar.view.fragment.MonthFragment;
 import al.bruno.calendar.view.adapter.MonthPagerAdapter;
-import al.bruno.calendar.view.listener.NavigationListener;
-import al.bruno.calendar.view.observer.Observer;
-import al.bruno.calendar.view.observer.Subject;
+import al.bruno.calendar.view.rx.MyRxBus;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,31 +29,37 @@ import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 import static al.bruno.calendar.view.util.Constants.DAYS_COUNT;
 import static al.bruno.calendar.view.util.Constants.PREFILLED_MONTHS;
 
-public class Calendar implements Observable, Subject<LocalDate[]> {
+public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
     private DateTime dateTime;
     private DateTime[] dateTimes;
-    private LocalDate[] dateTimeEvent;
     private OnDateClickListener onDateClickListener;
     private MonthPagerAdapter monthPagerAdapter;
     private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    private List<Observer<LocalDate[]>> registry = new ArrayList<>();
+    //private List<Observer<LocalDate[]>> registry = new ArrayList<>();
+    private MyRxBus myRxBus;
     /**
      * Display dates correctly in grid
      */
     public Calendar(Context context, DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
+        this.myRxBus = new MyRxBus();
         monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer -> {
-            MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
+            /*MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
             registerObserver(monthFragment);
-            return monthFragment;
+            return monthFragment;*/
+            return new MonthFragment
+                    .Builder()
+                    .setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener))
+                    .build();
         });
     }
 
     public Calendar(DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
+        this.myRxBus = new MyRxBus();
         monthAdapter =
                 new MonthAdapter((viewGroup, position) -> {
                     FragmentMonthBinding fragmentMonth = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.fragment_month, viewGroup, false);
@@ -160,7 +164,8 @@ public class Calendar implements Observable, Subject<LocalDate[]> {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             setDateTime(dateTimes[position]);
-            notifyObserver(dateTimeEvent);
+            //myRxBus.send(dateTimeEvent);
+            //notifyObserver(dateTimeEvent);
         }
 
         @Override
@@ -174,7 +179,7 @@ public class Calendar implements Observable, Subject<LocalDate[]> {
         }
     };
 
-    @Override
+    /*@Override
     public void removeObserver(Observer<LocalDate[]> o) {
         if (registry.indexOf(o) >= 0)
             registry.remove(o);
@@ -191,9 +196,9 @@ public class Calendar implements Observable, Subject<LocalDate[]> {
         for (Observer<LocalDate[]> observer : registry) {
             observer.update(dateTimes);
         }
-    }
+    }*/
 
     public void setEvent(LocalDate[] dateTimeEvent) {
-        this.dateTimeEvent = dateTimeEvent;
+        myRxBus.send(dateTimeEvent);
     }
 }

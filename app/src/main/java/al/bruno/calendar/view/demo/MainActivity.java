@@ -20,14 +20,14 @@ public class MainActivity extends AppCompatActivity {
 		ActivityMainBinding activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 		activityMainBinding.setOnDateClickListener((view, localDateTime) -> Toast.makeText(MainActivity.this, localDateTime.date().toString(), Toast.LENGTH_SHORT).show());
 		activityMainBinding.setEvent(new LocalDate[]{
-				new LocalDate("2018-12-05"),
-				new LocalDate("2018-12-07"),
-				new LocalDate("2018-12-09"),
-				new LocalDate("2018-12-19"),
-				new LocalDate("2018-12-29"),
-				new LocalDate("2018-12-20"),
-				new LocalDate("2018-12-15"),
-				new LocalDate("2018-12-10")
+				new LocalDate("2019-07-05"),
+				new LocalDate("2019-07-07"),
+				new LocalDate("2019-07-09"),
+				new LocalDate("2019-07-19"),
+				new LocalDate("2019-07-29"),
+				new LocalDate("2019-07-20"),
+				new LocalDate("2019-07-15"),
+				new LocalDate("2019-07-10")
 		});
 		/*CalendarView mCalendarView = findViewById(R.id.calendar_view);
 		setContentView(R.layout.activity_main);
