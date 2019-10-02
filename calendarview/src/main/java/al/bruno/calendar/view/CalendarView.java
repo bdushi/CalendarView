@@ -39,7 +39,7 @@ public class CalendarView extends LinearLayout implements OnDateClickListener {
 
 	private void initControl(Context context) {
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
-		calendar = new Calendar(context, DateTime.now()).setOnDateClickListener(this);
+		calendar = new Calendar(DateTime.now()).setOnDateClickListener(this);
 		calendarViewBinding.setCalendar(calendar);
 
 	}

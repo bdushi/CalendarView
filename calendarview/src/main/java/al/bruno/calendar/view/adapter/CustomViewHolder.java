@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomViewHolder<T, VM extends ViewDataBinding> extends RecyclerView.ViewHolder {
     private VM binding;
-    private BindingInterface<T, VM> bindingInterface;
+    private BindingData<T, VM> bindingData;
 
-    public CustomViewHolder(View view, BindingInterface<T, VM> bindingInterface) {
+    public CustomViewHolder(View view, BindingData<T, VM> bindingData) {
         super(view);
         binding = DataBindingUtil.bind(view);
-        this.bindingInterface = bindingInterface;
+        this.bindingData = bindingData;
     }
     public void bindData(T model) {
-        bindingInterface.bindData(model, binding);
+        bindingData.bindData(model, binding);
         binding.executePendingBindings();
     }
 }

@@ -1,80 +1,50 @@
 package al.bruno.calendar.view.model;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.List;
 import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
-import al.bruno.calendar.view.adapter.CustomArrayAdapter;
-import al.bruno.calendar.view.adapter.MonthAdapter;
-import al.bruno.calendar.view.fragment.MonthFragment;
-import al.bruno.calendar.view.adapter.MonthPagerAdapter;
-import al.bruno.calendar.view.rx.MyRxBus;
+import al.bruno.calendar.view.adapter.CustomListAdapter;
+import al.bruno.calendar.view.databinding.CalendarViewBinding;
 import al.bruno.calendar.view.util.Utilities;
 import al.bruno.calendar.view.listener.OnDateClickListener;
-import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.Bindable;
-import androidx.databinding.DataBindingUtil;
 import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.viewpager.widget.ViewPager;
-import al.bruno.calendar.view.databinding.FragmentMonthBinding;
-import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
 
 import static al.bruno.calendar.view.util.Constants.DAYS_COUNT;
 import static al.bruno.calendar.view.util.Constants.PREFILLED_MONTHS;
 
-public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
+public class Calendar implements Observable {
     private DateTime dateTime;
     private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
-    private MonthPagerAdapter monthPagerAdapter;
-    private MonthAdapter monthAdapter;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    //private List<Observer<LocalDate[]>> registry = new ArrayList<>();
-    private MyRxBus myRxBus;
+    private CustomListAdapter monthListAdapter;
     /**
      * Display dates correctly in grid
      */
-    public Calendar(Context context, DateTime dateTime) {
-        this.dateTime = dateTime;
-        this.dateTimes = months(dateTime);
-        this.myRxBus = new MyRxBus();
-        monthPagerAdapter = new MonthPagerAdapter(((AppCompatActivity)context).getSupportFragmentManager(), dateTimes.length, integer -> {
-            /*MonthFragment monthFragment = new MonthFragment.Builder().setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener)).build();
-            registerObserver(monthFragment);
-            return monthFragment;*/
-            return new MonthFragment
-                    .Builder()
-                    .setLocalDateTimes(Calendar.this.dateTime(dateTimes[integer], onDateClickListener))
-                    .build();
-        });
-    }
-
     public Calendar(DateTime dateTime) {
         this.dateTime = dateTime;
         this.dateTimes = months(dateTime);
-        this.myRxBus = new MyRxBus();
-        monthAdapter =
-                new MonthAdapter((viewGroup, position) -> {
-                    FragmentMonthBinding fragmentMonth = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.fragment_month, viewGroup, false);
-                    fragmentMonth.setAdapter(new CustomArrayAdapter<LocalDateTime, ControlCalendarDayBinding>(dateTime(dateTimes[position], onDateClickListener), R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> controlCalendarDayBinding.setLocalDateTime(localDateTime)));
-                    viewGroup.addView(fragmentMonth.getRoot());
-                    return fragmentMonth.getRoot();
-                }, dateTimes.length);
-    }
+        monthListAdapter = new CustomListAdapter<DateTime, CalendarViewBinding>(R.layout.calendar_view, (dateTime1, calendarViewBinding) -> {
 
-    public MonthPagerAdapter getMonthPagerAdapter() {
-        return monthPagerAdapter;
-    }
+        }, new DiffUtil.ItemCallback<DateTime>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
+                return oldItem.equals(newItem);
+            }
 
-    public MonthAdapter getMonthAdapter() {
-        return monthAdapter;
+            @Override
+            public boolean areContentsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
+                return oldItem.equals(newItem);
+            }
+        });
     }
 
     public DateTime getDateTime() {
@@ -87,6 +57,9 @@ public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
         propertyChangeRegistry.notifyChange(this, BR.year);
     }
 
+    public CustomListAdapter getMonthListAdapter() {
+        return monthListAdapter;
+    }
     @Bindable
     public String getMonth() {
         return Utilities.month()[dateTime.getMonthOfYear()];
@@ -117,6 +90,7 @@ public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
         }
         return localDateTime;
     }
+
     private LocalDateTime[] dateTime(DateTime dateTime, OnDateClickListener onDateClickListener) {
         LocalDateTime[] localDateTime = new LocalDateTime[DAYS_COUNT];
         int currMonthDays = dateTime.dayOfMonth().getMaximumValue();
@@ -164,8 +138,6 @@ public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             setDateTime(dateTimes[position]);
-            //myRxBus.send(dateTimeEvent);
-            //notifyObserver(dateTimeEvent);
         }
 
         @Override
@@ -179,26 +151,6 @@ public class Calendar implements Observable /*Subject<LocalDate[]>*/ {
         }
     };
 
-    /*@Override
-    public void removeObserver(Observer<LocalDate[]> o) {
-        if (registry.indexOf(o) >= 0)
-            registry.remove(o);
-    }
-
-
-    @Override
-    public void registerObserver(Observer<LocalDate[]> o) {
-        registry.add(o);
-    }
-
-    @Override
-    public void notifyObserver(LocalDate[] dateTimes) {
-        for (Observer<LocalDate[]> observer : registry) {
-            observer.update(dateTimes);
-        }
-    }*/
-
     public void setEvent(LocalDate[] dateTimeEvent) {
-        myRxBus.send(dateTimeEvent);
     }
 }

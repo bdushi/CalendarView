@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:bind="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:bind="http://schemas.android.com/apk/res-auto">
 	<data>
 		<variable
 			name="calendar"
@@ -10,7 +9,7 @@
 	<RelativeLayout
 		android:orientation="vertical"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content">
 		<androidx.appcompat.widget.AppCompatTextView
 			android:id="@+id/calendar_view_month"
 			android:layout_width="match_parent"
@@ -92,15 +91,19 @@
 				android:text="@string/sunday"
 				style="@style/Base.TextAppearance.AppCompat.Sunday"/>
 		</LinearLayout>
-		<androidx.viewpager.widget.ViewPager
+
+
+		<!--bind:adapter="@{calendar.monthPagerAdapter}"
+		bind:listener="@{calendar.onPageChangeListener}"-->
+
+		<androidx.viewpager2.widget.ViewPager2
 			android:id="@+id/month_pager"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/calendar_view_header"
+			bind:adapter="@{calendar.monthListAdapter}"
 			android:layout_alignParentStart="true"
 			android:layout_alignParentEnd="true"
-			android:layout_alignParentBottom="true"
-			bind:adapter="@{calendar.monthPagerAdapter}"
-			bind:listener="@{calendar.onPageChangeListener}" />
+			android:layout_alignParentBottom="true"/>
 	</RelativeLayout>
 </layout>
