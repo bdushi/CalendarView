@@ -3,11 +3,11 @@ package al.bruno.calendar.view.model;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import al.bruno.calendar.view.BR;
 import al.bruno.calendar.view.R;
 import al.bruno.calendar.view.adapter.CustomListAdapter;
 import al.bruno.calendar.view.databinding.CalendarViewBinding;
-import al.bruno.calendar.view.util.Utilities;
+import al.bruno.calendar.view.databinding.ControlCalendarDayBinding;
+import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 
 import androidx.annotation.NonNull;
@@ -15,36 +15,52 @@ import androidx.databinding.Bindable;
 import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
 import androidx.recyclerview.widget.DiffUtil;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import static al.bruno.calendar.view.util.Constants.DAYS_COUNT;
 import static al.bruno.calendar.view.util.Constants.PREFILLED_MONTHS;
+import static al.bruno.calendar.view.util.Utilities.month;
 
 public class Calendar implements Observable {
     private DateTime dateTime;
-    private DateTime[] dateTimes;
     private OnDateClickListener onDateClickListener;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
-    private CustomListAdapter monthListAdapter;
+
+    private CustomListAdapter controlCalendarAdapter = new CustomListAdapter<LocalDateTime, ControlCalendarDayBinding>(R.layout.control_calendar_day, (localDateTime, controlCalendarDayBinding) -> {
+        controlCalendarDayBinding.setLocalDateTime(localDateTime);
+        controlCalendarDayBinding.setDateClickListener(onDateClickListener);
+    }, new DiffUtil.ItemCallback<LocalDateTime>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull LocalDateTime oldItem, @NonNull LocalDateTime newItem) {
+            return oldItem == newItem;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull LocalDateTime oldItem, @NonNull LocalDateTime newItem) {
+            return oldItem == newItem;
+        }
+    });
+
+    private CustomListAdapter adapter = new CustomListAdapter<LocalDateTime, FragmentMonthBinding>(R.layout.fragment_month, (localDateTime, fragmentMonthBinding) -> {
+        fragmentMonthBinding.setAdapter();
+    }, new DiffUtil.ItemCallback<DateTime>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
+            return oldItem.equals(newItem);
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
+            return oldItem.equals(newItem);
+        }
+    });
+
     /**
      * Display dates correctly in grid
      */
     public Calendar(DateTime dateTime) {
         this.dateTime = dateTime;
-        this.dateTimes = months(dateTime);
-        monthListAdapter = new CustomListAdapter<DateTime, CalendarViewBinding>(R.layout.calendar_view, (dateTime1, calendarViewBinding) -> {
-
-        }, new DiffUtil.ItemCallback<DateTime>() {
-            @Override
-            public boolean areItemsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
-                return oldItem.equals(newItem);
-            }
-
-            @Override
-            public boolean areContentsTheSame(@NonNull DateTime oldItem, @NonNull DateTime newItem) {
-                return oldItem.equals(newItem);
-            }
-        });
+        // this.dateTimes = months(dateTime);
     }
 
     public DateTime getDateTime() {
@@ -53,27 +69,23 @@ public class Calendar implements Observable {
 
     public void setDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
-        propertyChangeRegistry.notifyChange(this, BR.month);
-        propertyChangeRegistry.notifyChange(this, BR.year);
     }
 
-    public CustomListAdapter getMonthListAdapter() {
-        return monthListAdapter;
-    }
     @Bindable
     public String getMonth() {
-        return Utilities.month()[dateTime.getMonthOfYear()];
+        return month(dateTime.getMonthOfYear());
     }
+
     @Bindable
     public String getYear() {
         return String.format("%s", dateTime.getYear());
     }
 
-
     public Calendar setOnDateClickListener(OnDateClickListener onDateClickListener) {
         this.onDateClickListener = onDateClickListener;
         return this;
     }
+
     private LocalDateTime[] calendar() {
         java.util.Calendar calendar = java.util.Calendar.getInstance();
         LocalDateTime[] localDateTime = new LocalDateTime[DAYS_COUNT];
@@ -134,20 +146,12 @@ public class Calendar implements Observable {
         propertyChangeRegistry.remove(callback);
     }
 
-    public ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+    // setDateTime(dateTimes[position]);
+    public ViewPager2.OnPageChangeCallback onPageChangeListener = new ViewPager2.OnPageChangeCallback() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            setDateTime(dateTimes[position]);
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            //setDateTime(dateTimes[position]);
         }
     };
 

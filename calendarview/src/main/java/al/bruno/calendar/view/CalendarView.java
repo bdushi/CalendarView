@@ -9,13 +9,16 @@ import android.widget.LinearLayout;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import al.bruno.calendar.view.adapter.CustomListAdapter;
 import al.bruno.calendar.view.databinding.CalendarViewBinding;
+import al.bruno.calendar.view.databinding.FragmentMonthBinding;
 import al.bruno.calendar.view.listener.OnDateClickListener;
 import al.bruno.calendar.view.model.Calendar;
 import al.bruno.calendar.view.model.LocalDateTime;
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DiffUtil;
 
 public class CalendarView extends LinearLayout implements OnDateClickListener {
 	//event handling

@@ -5,49 +5,37 @@
 		<variable
 			name="calendar"
 			type="al.bruno.calendar.view.model.Calendar"/>
+
+		<variable
+			name="adapter"
+			type="al.bruno.calendar.view.adapter.CustomListAdapter"/>
 	</data>
-	<RelativeLayout
+	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/calendar_view_month"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="20dp"
 			android:text="@{calendar.month}"
-			android:layout_alignParentTop="true"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentEnd="true"
 			style="@style/Base.TextAppearance.AppCompat.Month"/>
 		<androidx.appcompat.widget.AppCompatTextView
-			android:id="@+id/calendar_view_year"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="20dp"
 			android:text="@{calendar.year}"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentEnd="true"
-			android:layout_below="@id/calendar_view_month"
 			style="@style/Base.TextAppearance.AppCompat.Year"/>
 		<View
-			android:id="@+id/calendar_view_divider"
-			android:layout_below="@id/calendar_view_year"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
 			android:background="@color/greyed_out"
 			android:layout_marginBottom="2dp"
-			android:layout_marginTop="2dp"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentEnd="true"/>
+			android:layout_marginTop="2dp"/>
 		<LinearLayout
-			android:id="@+id/calendar_view_header"
-			android:layout_below="@id/calendar_view_divider"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentEnd="true">
+			android:orientation="horizontal">
 			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"
@@ -92,18 +80,13 @@
 				style="@style/Base.TextAppearance.AppCompat.Sunday"/>
 		</LinearLayout>
 
-
 		<!--bind:adapter="@{calendar.monthPagerAdapter}"
 		bind:listener="@{calendar.onPageChangeListener}"-->
 
 		<androidx.viewpager2.widget.ViewPager2
-			android:id="@+id/month_pager"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/calendar_view_header"
 			bind:adapter="@{calendar.monthListAdapter}"
-			android:layout_alignParentStart="true"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentBottom="true"/>
-	</RelativeLayout>
+            bind:listener="@{calendar.onPageChangeListener}"/>
+	</LinearLayout>
 </layout>
