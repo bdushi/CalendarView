@@ -13,17 +13,14 @@ import androidx.databinding.Bindable;
 import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
 
-public class LocalDateTime implements OnDateClickListener, Observable, Parcelable {
+public class LocalDateTime implements Observable, Parcelable {
     private DateTime dateTime;
     private DateTime currentDateTime = DateTime.now();
     private boolean event;
     private PropertyChangeRegistry propertyChangeRegistry = new PropertyChangeRegistry();
 
-    private OnDateClickListener onDateClickListener;
-
-    public LocalDateTime(DateTime dateTime, OnDateClickListener onDateClickListener) {
+    public LocalDateTime(DateTime dateTime) {
         this.dateTime = dateTime;
-        this.onDateClickListener = onDateClickListener;
     }
 
     protected LocalDateTime(Parcel in) {
@@ -93,11 +90,6 @@ public class LocalDateTime implements OnDateClickListener, Observable, Parcelabl
 
     public boolean isCurrentMonth() {
         return dateTime.getMonthOfYear() == currentDateTime.getMonthOfYear() && dateTime.getYear() == currentDateTime.getYear();
-    }
-
-    @Override
-    public void setOnDateClickListener(View view, LocalDateTime localDateTime) {
-        onDateClickListener.setOnDateClickListener(view, localDateTime);
     }
 
     @Override

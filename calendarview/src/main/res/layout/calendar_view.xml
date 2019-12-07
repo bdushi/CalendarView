@@ -13,7 +13,7 @@
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="match_parent">
 		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -85,8 +85,8 @@
 
 		<androidx.viewpager2.widget.ViewPager2
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			bind:adapter="@{calendar.monthListAdapter}"
+			android:layout_height="match_parent"
+			bind:adapter="@{calendar.adapter}"
             bind:listener="@{calendar.onPageChangeListener}"/>
 	</LinearLayout>
 </layout>

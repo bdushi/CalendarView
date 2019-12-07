@@ -21,7 +21,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.DiffUtil;
 
 public class CalendarView extends LinearLayout implements OnDateClickListener {
-	//event handling
 	private OnDateClickListener onDateClickListener;
 	private Calendar calendar;
 
@@ -42,9 +41,8 @@ public class CalendarView extends LinearLayout implements OnDateClickListener {
 
 	private void initControl(Context context) {
 		CalendarViewBinding calendarViewBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.calendar_view, this, true);
-		calendar = new Calendar(DateTime.now()).setOnDateClickListener(this);
+		calendar = new Calendar(DateTime.now(), this);
 		calendarViewBinding.setCalendar(calendar);
-
 	}
 
 	@BindingAdapter(value = {"app:onDateClickListener"}, requireAll = false)
